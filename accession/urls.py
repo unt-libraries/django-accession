@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, url, include
 import django_databrowse
 from accession.admin_views import duplicates, print_view
-from djangosite.site_views import accession_admin
+from accession.site_views import accession_admin
 
 urlpatterns = patterns('',
     url(r'^databrowse/(.*)', django_databrowse.site.root),
