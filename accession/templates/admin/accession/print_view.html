@@ -1,0 +1,29 @@
+{% extends "admin/base_site.html" %}
+
+{% if not is_popup %}
+    {% block breadcrumbs %}
+    <div class="breadcrumbs">
+        <a href="../../../../">Home</a> &rsaquo; 
+        <a href="../../../">{{app_name}}</a> &rsaquo; 
+        <a href="../../">{{model_name}}</a> &rsaquo;
+        <a href="../">{{ requested_obj.id}}</a> &rsaquo;
+        Print View
+    </div>
+    {% endblock %}
+{% endif %}
+
+{% block title %}Object Print View{% endblock %}
+
+{% block content %}
+    <table style="width:80%;">
+        {% for field in field_list %}
+            {% ifequal field.label "ID" %}
+            {% else %}
+                <tr>
+                    <td style="font-weight:bold;font-size:x-small;width:10%;">{{field.label|capfirst}}:</td>
+                    <td>{{ field.value|wordwrap:100}}&nbsp;</td>
+                </tr>
+            {% endifequal %}
+        {% endfor %}
+    </table>
+{% endblock %}

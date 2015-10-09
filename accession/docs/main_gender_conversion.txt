@@ -1,0 +1,15 @@
+NULL  	0        Not Recorded
+0 	    1762     Not Recorded
+1 	    9300     Female
+3 	    669      Male
+5 	    173      Unisex
+8 	    66       Gender Unknown
+12  	1        Gender Unknown
+
+ALTER TABLE `main` CHANGE `gender` `gender` VARCHAR(14) NOT NULL
+UPDATE `main` SET `gender` = 'F' WHERE `main`.`gender` = 1;
+UPDATE `main` SET `gender` = 'M' WHERE `main`.`gender` = 3;
+UPDATE `main` SET `gender` = 'U' WHERE `main`.`gender` = 5;
+UPDATE `main` SET `gender` = 'UnKn' WHERE `main`.`gender` = 8;
+UPDATE `main` SET `gender` = 'UnKn' WHERE `main`.`gender` = 12;
+UPDATE `main` SET `gender` = 'UnRec' WHERE `main`.`gender` = "0";

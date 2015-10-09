@@ -1,0 +1,37 @@
+{% extends "admin/base_site.html" %}
+
+{% if not is_popup %}
+    {% block breadcrumbs %}
+    <div class="breadcrumbs">
+        <a href="../../../">Home</a> &rsaquo; 
+        <a href="../../">Accession</a> &rsaquo; 
+        <a href="../">{{ model_selected|capfirst|escape }}</a> &rsaquo; 
+        Duplicates
+    </div>
+    {% endblock %}
+{% endif %}
+
+{% block title %}Duplicates{% endblock %}
+
+{% block content %}
+<div id="content-main">
+<h1>Duplicate Values</h1>
+        {% if object_list %}
+        <div class="module">
+        <table summary="duplicate values in this table">
+        <tr><th scope="row">count</th><th scope="row">value</th></tr>
+          {% for k, v in object_list %}
+          <tr>
+            <td>{{ k }}</td>
+            <td><a href="../?q={{ v }}">{{ v }}</a></td>
+          </tr>
+          {% endfor %}
+          </table>
+          </div>
+        {% else %}
+          <p>There are no duplicate entries</p>
+        {% endif %}
+        
+    </div>
+{% endblock %}
+

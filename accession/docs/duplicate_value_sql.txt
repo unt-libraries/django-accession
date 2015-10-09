@@ -1,0 +1,7 @@
+The following SQL is used to find the duplicate rows based on which row is in the group by value.  Only duplicate rows are listed.
+
+SELECT COUNT(*) AS `Rows` , `label` 
+FROM `accession_label` 
+GROUP BY `label` 
+HAVING COUNT(*) > 1 
+Order by Rows DESC
