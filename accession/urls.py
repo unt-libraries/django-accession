@@ -7,6 +7,6 @@ urlpatterns = patterns('',
     url(r'^databrowse/(.*)', django_databrowse.site.root),
     url(r'^admin/accession/(?P<model_selected>.*)/duplicates/$', duplicates),
     url(r'^admin/([^/]+)/([^/]+)/([0-9]+)/print/$', print_view),
-    url(r'^admin/([^/]+)/([^/]+)/export_csv/$', 'csv_export.views.csv_view', name="tfc_csv_export"),
+   #url(r'^admin/([^/]+)/([^/]+)/export_csv/$', 'csv_export.views.csv_view', name="tfc_csv_export"),
     url(r'^admin/', include(accession_admin.urls)),
 )

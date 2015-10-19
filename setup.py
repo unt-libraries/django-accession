@@ -7,12 +7,15 @@ setup(
     description='',
     long_description='See the home page for more information.',
     include_package_data=True,
-    install_requires=[],
+    install_requires=[
+        'django-localflavor>=1.0',
+        'django-databrowse>=1.3'
+    ],
     url='https://github.com/unt-libraries/django-accession',
     author='University of North Texas Libraries',
     author_email='mark.phillips@unt.edu',
     license='BSD',
-    keywords=[],
+    keywords=['django', 'fashion', 'app'],
     classifiers=[
         'Natural Language :: English',
         'Environment :: Web Environment',
