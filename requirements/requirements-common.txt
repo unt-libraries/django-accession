@@ -1,0 +1,2 @@
+django-localflavor>=1.1
+django-databrowse>=2014.9.26
