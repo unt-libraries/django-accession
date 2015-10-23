@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.contrib import databrowse
+import django_databrowse as databrowse
 from django.views.defaults import page_not_found, server_error
 #Auth Models
 from django.contrib.auth.models import User, Group
@@ -42,10 +42,6 @@ main_admin = admin.AdminSite(name="main")
 #Auth
 main_admin.register(User, UserAdmin)
 main_admin.register(Group, GroupAdmin)
-#Flatpage
-main_admin.register(FlatPage, FlatPageAdmin)
-#Sites
-main_admin.register(Site, SiteAdmin)
 #Accession
 main_admin.register(Accession, AccessionAdmin)
 main_admin.register(Donor, DonorAdmin)
