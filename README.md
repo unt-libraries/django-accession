@@ -36,14 +36,9 @@ Installation
         ]
     ```
 
-4. Sync the database.
+4. Sync the database and create a superuser account.
     ```sh
         $ python manage.py syncdb
-    ```
-
-5. Create superuser account.
-    ```sh
-        $ python manage.py createsuperuser
     ```
 
 
@@ -67,23 +62,27 @@ Developing
         $ docker-compose build
     ```
 
-5. Start the images as daemons.
+5. Allow the database to initialize everything (only needed the first time the image is loaded).
+    ```sh
+        $ docker-compose up db
+    ```
+    Wait until the output stops, then execute the following to stop the container.
+    ```sh
+        $ docker-compose stop db
+    ```
+
+6. Start the containers as daemons.
     ```sh
         $ docker-compose up -d
     ```
 
-5. Run the migrations.
+7. Sync the database and create a superuser account.
     ```sh
         $ docker-compose run --rm web python manage.py syncdb
     ```
+    At this point you should be able to access your local instance of the site by visiting <dockerhost>:8000/tfc/databrowse
 
-6. Add a superuser so you can view the admin interfaces.
-    ```sh
-        $ docker-compose run --rm web python manage.py createsuperuser
-    ```
-    At this point you should be able to access your local instance of the site by visiting localhost:8000/tfc/databrowse
-
-7. If desired, run the tests.
+9. If desired, run the tests.
     ```sh
         $ docker-compose run --rm web tox
     ```
