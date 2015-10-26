@@ -17,7 +17,7 @@ Installation
 
 1. Install from GitHub.
     ```sh
-        $ pip install git+git://github.com/unt-libraries/django-controlled-vocabularies.git
+        $ pip install git+git://github.com/unt-libraries/django-accession.git
     ```
 
 2. Add app and dependency to INSTALLED_APPS.
@@ -36,7 +36,7 @@ Installation
         ]
     ```
 
-4. Sync the database and create a superuser account.
+4. Sync the database.
     ```sh
         $ python manage.py syncdb
     ```
@@ -45,44 +45,36 @@ Installation
 Developing
 ----------
 
-1. [Install Docker](http://docs.docker.com/installation/)
+1. [Install Docker](http://docs.docker.com/installation/).
 
-2. Install Docker Compose
+2. Install Docker Compose.
     ```sh
         $ pip install docker-compose
     ```
 
 3. Clone the repository.
     ```sh
-        $ git clone https://github.com/unt-libraries/django-controlled-vocabularies
+        $ git clone https://github.com/unt-libraries/django-accession
     ```
 
-4. Build the images.
+4. Warm-up the database. It will take 10-15 seconds to complete after it has been pulled from the Docker Hub.
     ```sh
-        $ docker-compose build
+        $ docker-compose up -d db
     ```
 
-5. Allow the database to initialize everything (only needed the first time the image is loaded).
+5. Sync the database.
     ```sh
-        $ docker-compose up db
-    ```
-    Wait until the output stops, then execute the following to stop the container.
-    ```sh
-        $ docker-compose stop db
+        $ docker-compose run --rm web python manage.py syncdb
     ```
 
 6. Start the containers as daemons.
     ```sh
         $ docker-compose up -d
+        # Use 'docker-compose stop' to stop the containers.
     ```
+    At this point you should be able to access your local instance of the site by visiting <dockerhost>:8000/tfc/databrowse.
 
-7. Sync the database and create a superuser account.
-    ```sh
-        $ docker-compose run --rm web python manage.py syncdb
-    ```
-    At this point you should be able to access your local instance of the site by visiting <dockerhost>:8000/tfc/databrowse
-
-9. If desired, run the tests.
+7. If desired, run the tests.
     ```sh
         $ docker-compose run --rm web tox
     ```
@@ -90,7 +82,7 @@ Developing
 License
 -------
 
-See LICENSE.txt
+See LICENSE.txt.
 
 
 Contributors
