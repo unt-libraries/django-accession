@@ -72,7 +72,7 @@ Developing
         $ docker-compose up -d
         # Use 'docker-compose stop' to stop the containers.
     ```
-    At this point you should be able to access your local instance of the site by visiting <dockerhost>:8000/tfc/databrowse.
+    At this point you should be able to access your local instance of the site by visiting `<dockerhost_ip>:8000/tfc/databrowse`.
 
 7. If desired, run the tests.
     ```sh
