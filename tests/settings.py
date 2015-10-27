@@ -7,8 +7,6 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-SITE_ID = 1
-
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -16,7 +14,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites',
     'django_databrowse',
     'accession',
 )

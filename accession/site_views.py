@@ -1,18 +1,5 @@
 from django.contrib import admin
 import django_databrowse as databrowse
-from django.views.defaults import page_not_found, server_error
-#Auth Models
-from django.contrib.auth.models import User, Group
-#Auth Admins
-from django.contrib.auth.admin import UserAdmin, GroupAdmin
-#Flatpage Model
-from django.contrib.flatpages.models import FlatPage
-#Flatpage Admin
-from django.contrib.flatpages.admin import FlatPageAdmin
-#Sites Model
-from django.contrib.sites.models import Site
-#Sites Admin
-from django.contrib.sites.admin import SiteAdmin
 #Accession Models
 from accession.models import Accession, Donor, Country, Designer, \
 Label, Classification, Condition, Material, Measurement, \
@@ -28,20 +15,8 @@ TypeAdmin, PartAdmin, RetailerAdmin, Retailer_LabelAdmin
 from accession.admin import LocationAdmin as accession_LocationAdmin
 from accession.admin import CountryAdmin as accession_CountryAdmin
 from accession.admin import CityAdmin as accession_CityAdmin
-
-def handler404(request):
-    """Handles the 404 response """
-    return page_not_found(request, "404.html")
-
-def handler500(request):
-    """Handles the 500 response """
-    return server_error(request, "500.html")
-
 #Register all the admin objects that live in the main admin
 main_admin = admin.AdminSite(name="main")
-#Auth
-main_admin.register(User, UserAdmin)
-main_admin.register(Group, GroupAdmin)
 #Accession
 main_admin.register(Accession, AccessionAdmin)
 main_admin.register(Donor, DonorAdmin)
