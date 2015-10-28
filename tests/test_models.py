@@ -10,19 +10,19 @@ pytestmark = pytest.mark.django_db
 class TestAccession:
     def test_has_date_paperwork_sent_returns_true(self):
         accession = AccessionFactory()
-        assert accession.has_date_paperwork_sent() == True
+        assert accession.has_date_paperwork_sent() is True
 
     def test_has_date_paperwork_sent_returns_false(self):
         accession = AccessionFactory(date_paperwork_sent=None)
-        assert accession.has_date_paperwork_sent() == False
+        assert accession.has_date_paperwork_sent() is False
 
     def test_has_date_paperwork_returned_returns_true(self):
         accession = AccessionFactory()
-        assert accession.has_date_paperwork_returned() == True
+        assert accession.has_date_paperwork_returned() is True
 
     def test_has_date_paperwork_returned_returns_false(self):
         accession = AccessionFactory(date_paperwork_returned=None)
-        assert accession.has_date_paperwork_returned() == False
+        assert accession.has_date_paperwork_returned() is False
 
     def test_unicode(self):
         accession = AccessionFactory()
@@ -129,7 +129,7 @@ class TestObject:
     @pytest.mark.xfail(reason="Method doesn't take into account attribute might not exist.")
     def test_show_label_no_label(self):
         object_instance = ObjectFactory(lable=None)
-        assert object_instance.showLabel() == None
+        assert object_instance.showLabel() is None
 
     def test_show_location(self):
         object_instance = ObjectFactory()
@@ -141,7 +141,7 @@ class TestObject:
 
     def test_show_designer_no_designer(self):
         object_instance = ObjectFactory(designer=None)
-        assert object_instance.showDesigner() == None
+        assert object_instance.showDesigner() is None
 
     def test_unicode(self):
         object_instance = ObjectFactory()
