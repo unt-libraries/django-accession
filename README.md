@@ -57,24 +57,14 @@ Developing
         $ git clone https://github.com/unt-libraries/django-accession
     ```
 
-4. Warm-up the database. It will take 10-15 seconds to complete after it has been pulled from the Docker Hub.
-    ```sh
-        $ docker-compose up -d db
-    ```
-
-5. Sync the database.
-    ```sh
-        $ docker-compose run --rm web python manage.py syncdb
-    ```
-
-6. Start the containers as daemons.
+4. Start the container as a daemon.
     ```sh
         $ docker-compose up -d
-        # Use 'docker-compose stop' to stop the containers.
+        # Use 'docker-compose stop' to stop the container.
     ```
     At this point you should be able to access your local instance of the site by visiting `<dockerhost_ip>:8000/tfc/databrowse`.
 
-7. If desired, run the tests.
+5. If desired, run the tests.
     ```sh
         $ docker-compose run --rm web tox
     ```
