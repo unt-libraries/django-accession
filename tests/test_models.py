@@ -126,7 +126,6 @@ class TestObject:
         object_instance = ObjectFactory()
         assert object_instance.showLabel() == object_instance.label
 
-    @pytest.mark.xfail(reason="Method doesn't take into account attribute might not exist.")
     def test_show_label_no_label(self):
         object_instance = ObjectFactory(label=None)
         assert object_instance.showLabel() is None
