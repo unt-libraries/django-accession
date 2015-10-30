@@ -57,19 +57,17 @@ Developing
         $ git clone https://github.com/unt-libraries/django-accession
     ```
 
-4. Sync the database.
-    ```sh
-        $ docker-compose run --rm web python manage.py syncdb
-    ```
-    When prompted, create a superuser so you can access the admin sites.
-    This step only needs to be done the first time you start the container.
-
-5. Start the container as a daemon.
+4. Start the container as a daemon.
     ```sh
         $ docker-compose up -d
         # Use 'docker-compose stop' to stop the container.
     ```
     At this point you should be able to access your local instance of the site by visiting `<dockerhost_ip>:8000/tfc/databrowse`.
+
+5. Create a superuser for access to the admin sites.
+    ```sh
+        $ docker-compose run --rm web python manage.py createsuperuser
+    ```
 
 6. If desired, run the tests.
     ```sh
