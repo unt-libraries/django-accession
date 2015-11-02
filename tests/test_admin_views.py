@@ -1,8 +1,10 @@
 import pytest
 
+from django.http import Http404
+
 from accession import admin_views
 
-from .factories import DonorFactory
+from .factories import DonorFactory, AccessionFactory
 
 pytestmark = pytest.mark.django_db
 
@@ -66,8 +68,36 @@ class TestDuplicates():
 
 class TestPrintView():
 
-    def test_status_ok(self, rf, admin_user):
-        pass
+    def test_returns_200(self, rf, admin_user):
+        DonorFactory()
+
+        request = rf.get('/admin/accession/donor/1/print/')
+        request.user = admin_user
+
+        response = admin_views.print_view(request, 'accession', 'donor', 1)
+
+        assert response.status_code == 200
+
+    def test_raises_404_when_object_id_not_found(self, rf, admin_user):
+        request = rf.get('/admin/accession/donor/8/print/')
+        request.user = admin_user
+
+        with pytest.raises(Http404):
+            admin_views.print_view(request, 'accession', 'donor', 8)
+
+    def test_correct_info_printed(self, rf, admin_user):
+        accession = AccessionFactory()
+
+        request = rf.get('/admin/accession/accession/1/print/')
+        request.user = admin_user
+
+        response = admin_views.print_view(request, 'accession', 'accession', 1)
+
+        # Check a couple fields to make sure they're there.
+        assert accession.description in response.content
+        assert accession.acquisition_method in response.content
+        # Make sure the related items is there too.
+        assert str(accession.donor) in response.content
 
 
 def test_query_to_tuple():
