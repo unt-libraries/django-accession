@@ -101,8 +101,20 @@ class TestPrintView():
 
 
 def test_query_to_tuple():
-    pass
+    DonorFactory.create_batch(3, first_name='Bob', last_name='Tucker')
+
+    query = """SELECT first_name, last_name from accession_donor"""
+    expected = [('Bob', 'Tucker'), ('Bob', 'Tucker'), ('Bob', 'Tucker')]
+
+    results = admin_views.query_to_tuple(query)
+
+    assert results == expected
 
 
 def test_query_to_tuple_no_results():
-    pass
+    query = """SELECT first_name, last_name from accession_donor"""
+    expected = []
+
+    results = admin_views.query_to_tuple(query)
+
+    assert results == expected
