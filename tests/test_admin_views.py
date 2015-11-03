@@ -96,7 +96,7 @@ class TestPrintView():
         # Check a couple fields to make sure they're there.
         assert accession.description in response.content
         assert accession.acquisition_method in response.content
-        # Make sure the related items is there too.
+        # Make sure the related items are there too.
         assert str(accession.donor) in response.content
 
 
