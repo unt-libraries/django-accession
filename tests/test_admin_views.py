@@ -20,10 +20,10 @@ class TestDuplicates():
         assert response.status_code == 200
 
     def test_returns_200_with_unmapped_model(self, rf, admin_user):
-        request = rf.get('/admin/accession/donor/duplicates/')
+        request = rf.get('/admin/accession/city/duplicates/')
         request.user = admin_user
 
-        response = admin_views.duplicates(request, 'donor')
+        response = admin_views.duplicates(request, 'city')
 
         assert response.status_code == 200
 
