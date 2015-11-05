@@ -1,3 +1,5 @@
+from djqscsv import render_to_csv_response
+
 from django.db import models
 from django.db.models.fields.related import RelatedField
 from django.http import Http404
@@ -6,23 +8,25 @@ from django.shortcuts import render_to_response
 from django.db import connection
 from django.contrib.admin.views.decorators import staff_member_required
 
+
 def query_to_tuple(query_string, *query_args):
     """Run a simple query and produce a tuple of results,
         with row data tuples
     """
     cursor = connection.cursor()
-    cursor.execute(query_string, query_args)  
-    
-    return cursor.fetchall()   
+    cursor.execute(query_string, query_args)
+
+    return cursor.fetchall()
+
 
 @staff_member_required
 def duplicates(request, model_selected):
 
     #model_selected = "designer"
-    
+
     field_mapping = {
         "type": "object_type",
-        "accession": "accession_number", 
+        "accession": "accession_number",
         "donor": "last_name",
         "object": "object_number",
         }
@@ -30,30 +34,31 @@ def duplicates(request, model_selected):
         field = model_selected
     else:
         field = field_mapping[model_selected]
-        
-    
+
+
     label_query = """
-    SELECT 
-      COUNT(*) AS `count` , `%s` 
-    FROM 
-      `accession_%s` 
-    GROUP BY 
-      `%s` 
-    HAVING 
-      COUNT(*) > 1 
-    Order by 
+    SELECT
+      COUNT(*) AS `count` , `%s`
+    FROM
+      `accession_%s`
+    GROUP BY
+      `%s`
+    HAVING
+      COUNT(*) > 1
+    Order by
       count DESC
     """ % ( field, model_selected, field )
-    
+
     results = query_to_tuple(label_query,
-    ) 
-    
+    )
+
 
     return render_to_response(
         "admin/accession/duplicates.html",
         {'object_list' : results, 'model_selected': model_selected},
         RequestContext(request, {}),
     )
+
 
 @staff_member_required
 def print_view(request, app_label, model_name, object_id):
@@ -63,8 +68,8 @@ def print_view(request, app_label, model_name, object_id):
     try:
         row = model.objects.get(id__exact=int(object_id))
     except:
-        raise Http404, "Object not found." 
-    
+        raise Http404, "Object not found."
+
     field_list = []
     #Loop through the field's and assign the values to the labels
     for field in model._meta.fields:
@@ -94,7 +99,7 @@ def print_view(request, app_label, model_name, object_id):
             else:
                 value = row.__dict__[field.name]
         field_list.append({'label': field.verbose_name, 'value': value})
-    
+
     return render_to_response(
         "admin/accession/print_view.html",
         {
@@ -105,3 +110,8 @@ def print_view(request, app_label, model_name, object_id):
         },
         RequestContext(request, {}),
     )
+
+
+def export_csv(request, app, model):
+    model = models.get_model(app, model)
+    return render_to_csv_response(model.objects.all())
