@@ -12,7 +12,7 @@ pytestmark = pytest.mark.django_db
 class TestDuplicates():
 
     def test_returns_200_with_mapped_model(self, rf, admin_user):
-        request = rf.get('/admin/accession/donor/duplicates/')
+        request = rf.get('/')
         request.user = admin_user
 
         response = admin_views.duplicates(request, 'donor')
@@ -20,7 +20,7 @@ class TestDuplicates():
         assert response.status_code == 200
 
     def test_returns_200_with_unmapped_model(self, rf, admin_user):
-        request = rf.get('/admin/accession/city/duplicates/')
+        request = rf.get('/')
         request.user = admin_user
 
         response = admin_views.duplicates(request, 'city')
@@ -30,7 +30,7 @@ class TestDuplicates():
     @pytest.mark.xfail(reason='The view does not catch the exception raised'
                               'when the model does not exist')
     def test_returns_404_when_model_does_not_exist(self, rf, admin_user):
-        request = rf.get('/admin/accession/donor/duplicates/')
+        request = rf.get('/')
         request.user = admin_user
 
         response = admin_views.duplicates(request, 'dne')
@@ -47,7 +47,7 @@ class TestDuplicates():
         # Duplicate entries
         DonorFactory.create_batch(4, last_name='Smith')
 
-        request = rf.get('/admin/accession/donor/duplicates/')
+        request = rf.get('/')
         request.user = admin_user
 
         response = admin_views.duplicates(request, 'donor')
@@ -58,7 +58,7 @@ class TestDuplicates():
     def test_without_duplicates(self, rf, admin_user):
         DonorFactory.create_batch(5)
 
-        request = rf.get('/admin/accession/donor/duplicates/')
+        request = rf.get('/')
         request.user = admin_user
 
         response = admin_views.duplicates(request, 'donor')
@@ -71,7 +71,7 @@ class TestPrintView():
     def test_returns_200(self, rf, admin_user):
         DonorFactory()
 
-        request = rf.get('/admin/accession/donor/1/print/')
+        request = rf.get('/')
         request.user = admin_user
 
         response = admin_views.print_view(request, 'accession', 'donor', 1)
@@ -79,7 +79,7 @@ class TestPrintView():
         assert response.status_code == 200
 
     def test_raises_404_when_object_id_not_found(self, rf, admin_user):
-        request = rf.get('/admin/accession/donor/8/print/')
+        request = rf.get('/')
         request.user = admin_user
 
         with pytest.raises(Http404):
@@ -88,7 +88,7 @@ class TestPrintView():
     def test_correct_info_printed(self, rf, admin_user):
         accession = AccessionFactory()
 
-        request = rf.get('/admin/accession/accession/1/print/')
+        request = rf.get('/')
         request.user = admin_user
 
         response = admin_views.print_view(request, 'accession', 'accession', 1)
