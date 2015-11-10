@@ -128,3 +128,16 @@ class TestExportCsv():
 
         with pytest.raises(Http404):
             admin_views.export_csv(request, 'accession', 'dne')
+
+    def test_correct_info_returned(self, rf, admin_user):
+        donors = DonorFactory.create_batch(10)
+
+        request = rf.get('/')
+        request.user = admin_user
+
+        response = admin_views.export_csv(request, 'accession', 'donor')
+
+        for donor in donors:
+            assert response.get('Content-Type') == 'text/csv'
+            assert str(donor.first_name) in response.content
+            assert str(donor.last_name) in response.content
