@@ -67,14 +67,14 @@ class TestPrintView():
 
         assert response.status_code == 200
 
-    def test_returns_404_when_app_does_not_exist(self, rf, admin_user):
+    def test_raises_404_when_app_does_not_exist(self, rf, admin_user):
         request = rf.get('/')
         request.user = admin_user
 
         with pytest.raises(Http404):
             admin_views.print_view(request, 'dne', 'dne', 1)
 
-    def test_returns_404_when_model_does_not_exist(self, rf, admin_user):
+    def test_raises_404_when_model_does_not_exist(self, rf, admin_user):
         request = rf.get('/')
         request.user = admin_user
 
@@ -115,14 +115,14 @@ class TestExportCsv():
 
         assert response.status_code == 200
 
-    def test_returns_404_when_app_does_not_exist(self, rf, admin_user):
+    def test_raises_404_when_app_does_not_exist(self, rf, admin_user):
         request = rf.get('/')
         request.user = admin_user
 
         with pytest.raises(Http404):
             admin_views.export_csv(request, 'dne', 'dne')
 
-    def test_returns_404_when_model_does_not_exist(self, rf, admin_user):
+    def test_raises_404_when_model_does_not_exist(self, rf, admin_user):
         request = rf.get('/')
         request.user = admin_user
 
