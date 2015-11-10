@@ -11,7 +11,7 @@ pytestmark = pytest.mark.django_db
 
 class TestDuplicates():
 
-    def test_returns_200_with_mapped_model(self, rf, admin_user):
+    def test_returns_200_with_existing_model(self, rf, admin_user):
         request = rf.get('/')
         request.user = admin_user
 
@@ -19,23 +19,12 @@ class TestDuplicates():
 
         assert response.status_code == 200
 
-    def test_returns_200_with_unmapped_model(self, rf, admin_user):
+    def test_raises_404_when_model_does_not_exist(self, rf, admin_user):
         request = rf.get('/')
         request.user = admin_user
 
-        response = admin_views.duplicates(request, 'city')
-
-        assert response.status_code == 200
-
-    @pytest.mark.xfail(reason='The view does not catch the exception raised'
-                              'when the model does not exist')
-    def test_returns_404_when_model_does_not_exist(self, rf, admin_user):
-        request = rf.get('/')
-        request.user = admin_user
-
-        response = admin_views.duplicates(request, 'dne')
-
-        assert response.status_code == 404
+        with pytest.raises(Http404):
+            admin_views.duplicates(request, 'dne')
 
     def test_template_used(self, admin_client):
         response = admin_client.get('/admin/accession/donor/duplicates/')
@@ -98,23 +87,3 @@ class TestPrintView():
         assert accession.acquisition_method in response.content
         # Make sure the related items are there too.
         assert str(accession.donor) in response.content
-
-
-def test_query_to_tuple():
-    DonorFactory.create_batch(3, first_name='Bob', last_name='Tucker')
-
-    query = """SELECT first_name, last_name from accession_donor"""
-    expected = [('Bob', 'Tucker'), ('Bob', 'Tucker'), ('Bob', 'Tucker')]
-
-    results = admin_views.query_to_tuple(query)
-
-    assert results == expected
-
-
-def test_query_to_tuple_no_results():
-    query = """SELECT first_name, last_name from accession_donor"""
-    expected = []
-
-    results = admin_views.query_to_tuple(query)
-
-    assert results == expected
