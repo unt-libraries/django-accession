@@ -67,6 +67,20 @@ class TestPrintView():
 
         assert response.status_code == 200
 
+    def test_returns_404_when_app_does_not_exist(self, rf, admin_user):
+        request = rf.get('/')
+        request.user = admin_user
+
+        with pytest.raises(Http404):
+            admin_views.print_view(request, 'dne', 'dne', 1)
+
+    def test_returns_404_when_model_does_not_exist(self, rf, admin_user):
+        request = rf.get('/')
+        request.user = admin_user
+
+        with pytest.raises(Http404):
+            admin_views.print_view(request, 'accession', 'dne', 1)
+
     def test_raises_404_when_object_id_not_found(self, rf, admin_user):
         request = rf.get('/')
         request.user = admin_user
@@ -87,3 +101,30 @@ class TestPrintView():
         assert accession.acquisition_method in response.content
         # Make sure the related items are there too.
         assert str(accession.donor) in response.content
+
+
+class TestExportCsv():
+
+    def test_returns_200(self, rf, admin_user):
+        DonorFactory()
+
+        request = rf.get('/')
+        request.user = admin_user
+
+        response = admin_views.export_csv(request, 'accession', 'donor')
+
+        assert response.status_code == 200
+
+    def test_returns_404_when_app_does_not_exist(self, rf, admin_user):
+        request = rf.get('/')
+        request.user = admin_user
+
+        with pytest.raises(Http404):
+            admin_views.export_csv(request, 'dne', 'dne')
+
+    def test_returns_404_when_model_does_not_exist(self, rf, admin_user):
+        request = rf.get('/')
+        request.user = admin_user
+
+        with pytest.raises(Http404):
+            admin_views.export_csv(request, 'accession', 'dne')

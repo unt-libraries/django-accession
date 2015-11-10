@@ -77,5 +77,12 @@ def print_view(request, app_label, model_name, object_id):
 
 
 def export_csv(request, app, model):
-    model = models.get_model(app, model)
-    return render_to_csv_response(model.objects.all())
+    try:
+        model = models.get_model(app, model)
+        response = render_to_csv_response(model.objects.all())
+    except AttributeError as e:
+        raise Http404(str(e))
+    except LookupError as e:
+        raise Http404(str(e))
+
+    return response
