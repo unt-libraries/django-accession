@@ -4,11 +4,8 @@ from accession import models
 
 
 class ModelNotFound(Exception):
-    def __init__(self, value):
-        self.value = value
-
-    def __str__(self):
-        return repr(self.value)
+    """Exception for when the model is not in the model_field_map."""
+    pass
 
 
 def find_duplicates(model_str):

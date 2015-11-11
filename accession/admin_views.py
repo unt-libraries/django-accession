@@ -15,7 +15,7 @@ def duplicates(request, model_selected):
     try:
         results = find_duplicates(model_selected)
     except ModelNotFound as e:
-        raise Http404(e.value)
+        raise Http404(str(e))
 
     return render_to_response(
         "admin/accession/duplicates.html",
