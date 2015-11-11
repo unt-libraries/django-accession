@@ -4,7 +4,7 @@ from accession import models
 
 
 class ModelNotFound(Exception):
-    """Exception for when the model is not in the model_field_map."""
+    """Exception raised when a model string does not represent a known model."""
     pass
 
 
@@ -12,12 +12,12 @@ def find_duplicates(model_str):
     """Finds all table entries that have the same value in a certain field.
 
     This function takes a model string and returns a list of
-    lists containing the count and field name for all found duplicates.
+    tuples containing the count and field name for all found duplicates.
     For example, if there was a model 'Dogs' with a field 'name', and two of
     the entries shared the same name 'Ralf', then the returned results would
     be the following:
         >>>find_duplicates(Dogs, 'name')
-        [[2, 'Ralf']]
+        [(2, 'Ralf')]
     """
 
     model_field_map = {
