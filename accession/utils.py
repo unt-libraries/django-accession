@@ -21,22 +21,22 @@ def find_duplicates(model_str):
     """
 
     model_field_map = {
-        'accession': [models.Accession, 'accession_number'],
-        'city': [models.City, 'city'],
-        'classification': [models.Classification, 'classification'],
-        'condition': [models.Condition, 'condition'],
-        'country': [models.Country, 'country'],
-        'designer': [models.Designer, 'designer'],
-        'donor': [models.Donor, 'last_name'],
-        'label': [models.Label, 'label'],
-        'location': [models.Location, 'location'],
-        'material': [models.Material, 'material'],
-        'measurement': [models.Measurement, 'measurement'],
-        'object': [models.Object, 'object_number'],
-        'part': [models.Part, 'part'],
-        'retailer_label': [models.Retailer_Label, 'retailer_label'],
-        'retailer': [models.Retailer, 'retailer'],
-        'type': [models.Type, 'object_type']
+        'accession': (models.Accession, 'accession_number'),
+        'city': (models.City, 'city'),
+        'classification': (models.Classification, 'classification'),
+        'condition': (models.Condition, 'condition'),
+        'country': (models.Country, 'country'),
+        'designer': (models.Designer, 'designer'),
+        'donor': (models.Donor, 'last_name'),
+        'label': (models.Label, 'label'),
+        'location': (models.Location, 'location'),
+        'material': (models.Material, 'material'),
+        'measurement': (models.Measurement, 'measurement'),
+        'object': (models.Object, 'object_number'),
+        'part': (models.Part, 'part'),
+        'retailer_label': (models.Retailer_Label, 'retailer_label'),
+        'retailer': (models.Retailer, 'retailer'),
+        'type': (models.Type, 'object_type')
     }
 
     # Map the model string to the model class and field.
