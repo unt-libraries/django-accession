@@ -80,9 +80,7 @@ def export_csv(request, app, model):
     try:
         model = models.get_model(app, model)
         response = render_to_csv_response(model.objects.all())
-    except AttributeError as e:
-        raise Http404(str(e))
-    except LookupError as e:
+    except (AttributeError, LookupError) as e:
         raise Http404(str(e))
 
     return response
