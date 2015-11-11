@@ -27,6 +27,6 @@ class TestFindDuplicates():
 
         results = find_duplicates('donor')
 
-        expected = [[4, 'Doe'], [3, 'Smith']]
+        expected = [(4, 'Doe'), (3, 'Smith')]
 
         assert results == expected

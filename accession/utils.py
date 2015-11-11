@@ -54,6 +54,6 @@ def find_duplicates(model_str):
     # Convert list of dicts into a list of lists, as expected by the template.
     results = []
     for result in queryset:
-        results.append([result['count'], result[field]])
+        results.append((result['count'], result[field]))
 
     return results
