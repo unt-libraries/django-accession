@@ -11,7 +11,7 @@ pytestmark = pytest.mark.django_db
 
 class TestDuplicates():
 
-    def test_returns_200_with_mapped_model(self, rf, admin_user):
+    def test_returns_200_with_existing_model(self, rf, admin_user):
         request = rf.get('/')
         request.user = admin_user
 
@@ -19,23 +19,12 @@ class TestDuplicates():
 
         assert response.status_code == 200
 
-    def test_returns_200_with_unmapped_model(self, rf, admin_user):
+    def test_raises_404_when_model_does_not_exist(self, rf, admin_user):
         request = rf.get('/')
         request.user = admin_user
 
-        response = admin_views.duplicates(request, 'city')
-
-        assert response.status_code == 200
-
-    @pytest.mark.xfail(reason='The view does not catch the exception raised'
-                              'when the model does not exist')
-    def test_returns_404_when_model_does_not_exist(self, rf, admin_user):
-        request = rf.get('/')
-        request.user = admin_user
-
-        response = admin_views.duplicates(request, 'dne')
-
-        assert response.status_code == 404
+        with pytest.raises(Http404):
+            admin_views.duplicates(request, 'dne')
 
     def test_template_used(self, admin_client):
         response = admin_client.get('/admin/accession/donor/duplicates/')
@@ -78,6 +67,20 @@ class TestPrintView():
 
         assert response.status_code == 200
 
+    def test_raises_404_when_app_does_not_exist(self, rf, admin_user):
+        request = rf.get('/')
+        request.user = admin_user
+
+        with pytest.raises(Http404):
+            admin_views.print_view(request, 'dne', 'dne', 1)
+
+    def test_raises_404_when_model_does_not_exist(self, rf, admin_user):
+        request = rf.get('/')
+        request.user = admin_user
+
+        with pytest.raises(Http404):
+            admin_views.print_view(request, 'accession', 'dne', 1)
+
     def test_raises_404_when_object_id_not_found(self, rf, admin_user):
         request = rf.get('/')
         request.user = admin_user
@@ -100,21 +103,41 @@ class TestPrintView():
         assert str(accession.donor) in response.content
 
 
-def test_query_to_tuple():
-    DonorFactory.create_batch(3, first_name='Bob', last_name='Tucker')
+class TestExportCsv():
 
-    query = """SELECT first_name, last_name from accession_donor"""
-    expected = [('Bob', 'Tucker'), ('Bob', 'Tucker'), ('Bob', 'Tucker')]
+    def test_returns_200(self, rf, admin_user):
+        DonorFactory()
 
-    results = admin_views.query_to_tuple(query)
+        request = rf.get('/')
+        request.user = admin_user
 
-    assert results == expected
+        response = admin_views.export_csv(request, 'accession', 'donor')
 
+        assert response.status_code == 200
 
-def test_query_to_tuple_no_results():
-    query = """SELECT first_name, last_name from accession_donor"""
-    expected = []
+    def test_raises_404_when_app_does_not_exist(self, rf, admin_user):
+        request = rf.get('/')
+        request.user = admin_user
 
-    results = admin_views.query_to_tuple(query)
+        with pytest.raises(Http404):
+            admin_views.export_csv(request, 'dne', 'dne')
 
-    assert results == expected
+    def test_raises_404_when_model_does_not_exist(self, rf, admin_user):
+        request = rf.get('/')
+        request.user = admin_user
+
+        with pytest.raises(Http404):
+            admin_views.export_csv(request, 'accession', 'dne')
+
+    def test_correct_info_returned(self, rf, admin_user):
+        donors = DonorFactory.create_batch(10)
+
+        request = rf.get('/')
+        request.user = admin_user
+
+        response = admin_views.export_csv(request, 'accession', 'donor')
+
+        for donor in donors:
+            assert response.get('Content-Type') == 'text/csv'
+            assert str(donor.first_name) in response.content
+            assert str(donor.last_name) in response.content
