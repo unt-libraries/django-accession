@@ -28,7 +28,11 @@ def duplicates(request, model_selected):
 def print_view(request, app_label, model_name, object_id):
     """Print view for the accession object model"""
     # Get the model
-    model = models.get_model(app_label, model_name)
+    try:
+        model = models.get_model(app_label, model_name)
+    except LookupError:
+        raise Http404("Model not found.")
+
     try:
         row = model.objects.get(id__exact=int(object_id))
     except:
