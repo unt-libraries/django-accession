@@ -36,9 +36,9 @@ Installation
         ]
     ```
 
-4. Sync the database.
+4. Apply migrations.
     ```sh
-        $ python manage.py syncdb
+        $ python manage.py migrate
     ```
 
 
