@@ -9,7 +9,7 @@ About
 Requirements
 ------------
 
-* Django 1.6
+* Django 1.8
 
 
 Installation
