@@ -23,7 +23,6 @@ Installation
 2. Add app and dependency to INSTALLED_APPS.
     ```python
         INSTALLED_APPS = (
-            'django_databrowse',
             'accession',
         )
     ```
@@ -62,7 +61,7 @@ Developing
         $ docker-compose up -d
         # Use 'docker-compose stop' to stop the container.
     ```
-    At this point you should be able to access your local instance of the site by visiting `<dockerhost_ip>:8000/tfc/databrowse`.
+    At this point you should be able to access your local instance of the site by visiting `<dockerhost_ip>:8000/tfc/admin`.
 
 5. Create a superuser for access to the admin sites.
     ```sh
