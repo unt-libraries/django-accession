@@ -20,7 +20,7 @@ DONOR_TYPE_CHOICES = (
     ('ORG', 'Organization'),
     )
 
-ACQUISITION_METHOD_CHOICES =  (
+ACQUISITION_METHOD_CHOICES = (
     ('GIK', 'Gift In Kind'),
     ('TRN', 'Transfer'),
     ('PUR', 'Purchase'),
@@ -56,7 +56,7 @@ ERA_CHOICES = (
     ('1990-1999', '1990-1999'),
     ('2000-2009', '2000-2009'),
     ('2010-2019', '2010-2019'),
-    )
+)
 
 OBJECT_GENDER_CHOICES = (
     ('M', 'Male'),
@@ -65,7 +65,8 @@ OBJECT_GENDER_CHOICES = (
     ('UnKn', 'Gender Unknown'),
     ('UnRec', 'Not Recorded'),
     ('NA', 'Not Applicable'),
-    )
+)
+
 
 class Accession(models.Model):
     accession_number = models.CharField(max_length=12, unique=True)
@@ -74,14 +75,20 @@ class Accession(models.Model):
     description = models.TextField(
         help_text="Publicly viewable description of the accession")
     date_in_computer = models.DateField(blank=True, null=True)
-    acquisition_method = models.CharField(max_length=3, choices=ACQUISITION_METHOD_CHOICES, default="GIK")
+    acquisition_method = models.CharField(
+        max_length=3, choices=ACQUISITION_METHOD_CHOICES, default="GIK")
     anonymous_accession = models.BooleanField(
         help_text="Check if accession should be listed as anonymous on any public interface")
-    date_paperwork_sent = models.DateField(blank=True, null=True,
+    date_paperwork_sent = models.DateField(
+        blank=True,
+        null=True,
         help_text="Date recipt of gift (ROG) was mailed out")
-    date_paperwork_returned = models.DateField(blank=True, null=True,
+    date_paperwork_returned = models.DateField(
+        blank=True,
+        null=True,
         help_text="Date signed recipt of gift (ROG) was received")
-    accession_note = models.TextField(blank=True,
+    accession_note = models.TextField(
+        blank=True,
         help_text="Private note related to this accession")
 
     def __unicode__(self):
@@ -91,12 +98,12 @@ class Accession(models.Model):
         ordering = ["accession_number"]
 
     def has_date_paperwork_sent(self):
-        return self.date_paperwork_sent != None
+        return self.date_paperwork_sent is not None
     has_date_paperwork_sent.short_description = "Paperwork Sent"
     has_date_paperwork_sent.boolean = True
 
     def has_date_paperwork_returned(self):
-        return self.date_paperwork_returned != None
+        return self.date_paperwork_returned is not None
     has_date_paperwork_returned.short_description = "Paperwork Returned"
     has_date_paperwork_returned.boolean = True
 
@@ -107,7 +114,10 @@ class Donor(models.Model):
     middle_name = models.CharField(blank=True, max_length=100)
     last_name = models.CharField(blank=True, max_length=100)
     organization_name = models.CharField(blank=True, max_length=255)
-    donor_type = models.CharField(max_length=3, blank=True, choices=DONOR_TYPE_CHOICES, default="PER")
+    donor_type = models.CharField(max_length=3,
+                                  blank=True,
+                                  choices=DONOR_TYPE_CHOICES,
+                                  default="PER")
     gender = models.CharField(max_length=1, blank=True, choices=GENDER_CHOICES)
     address_1 = models.CharField(max_length=100, blank=True)
     address_2 = models.CharField(max_length=100, blank=True)
@@ -115,16 +125,20 @@ class Donor(models.Model):
     state = models.CharField(max_length=2, blank=True, choices=YOUR_STATE_CHOICES)
     postal_code = models.CharField(max_length=15, blank=True)
     country = models.ForeignKey("Country", blank=True, null=True)
-    phone_number_1 = models.CharField(max_length=25, blank=True,
+    phone_number_1 = models.CharField(
+        max_length=25,
+        blank=True,
         help_text="Please use the following format: <em>(940) 391-0414</em>.")
-    phone_number_2 = models.CharField(max_length=25, blank=True,
+    phone_number_2 = models.CharField(
+        max_length=25,
+        blank=True,
         help_text="Please use the following format: <em>(940) 391-0414</em>.")
     email_address = models.EmailField(blank=True)
     comments = models.TextField(blank=True)
 
-
     class Meta:
         ordering = ["last_name", "first_name"]
+
     @property
     def full_name(self):
         if self.donor_type == "ORG":
@@ -135,6 +149,7 @@ class Donor(models.Model):
     def __unicode__(self):
         return u'%s' % self.full_name
 
+
 class City(models.Model):
     city = models.CharField(max_length=100, unique=True)
 
@@ -144,6 +159,7 @@ class City(models.Model):
 
     def __unicode__(self):
         return self.city
+
 
 class Country(models.Model):
     # CHANGE-BACK once database cleanup is done to make unique=True
@@ -161,12 +177,12 @@ class Designer(models.Model):
     # CHANGE-BACK once database cleanup is done to make unique=True
     designer = models.CharField(max_length=200)
 
-
     class Meta:
         ordering = ["designer"]
 
     def __unicode__(self):
         return self.designer
+
 
 class Label(models.Model):
     # CHANGE-BACK once database cleanup is done to make unique=True
@@ -178,6 +194,7 @@ class Label(models.Model):
     def __unicode__(self):
         return self.label
 
+
 class Retailer(models.Model):
     retailer_name = models.CharField(max_length=200, unique=True)
 
@@ -186,6 +203,7 @@ class Retailer(models.Model):
 
     def __unicode__(self):
         return self.retailer_name
+
 
 class Retailer_Label(models.Model):
     retailer_label = models.CharField(
@@ -201,6 +219,7 @@ class Retailer_Label(models.Model):
     def __unicode__(self):
         return self.retailer_label
 
+
 class Classification(models.Model):
     classification = models.CharField(max_length=50, unique=True)
 
@@ -209,6 +228,7 @@ class Classification(models.Model):
 
     def __unicode__(self):
         return self.classification
+
 
 class Location(models.Model):
     # CHANGE-BACK once database cleanup is done to make unique=True
@@ -220,6 +240,7 @@ class Location(models.Model):
     def __unicode__(self):
         return self.location
 
+
 class Condition(models.Model):
     condition = models.CharField(max_length=50, unique=True)
 
@@ -228,6 +249,7 @@ class Condition(models.Model):
 
     def __unicode__(self):
         return self.condition
+
 
 class Material(models.Model):
     # CHANGE-BACK once database cleanup is done to make unique=True
@@ -239,6 +261,7 @@ class Material(models.Model):
     def __unicode__(self):
         return self.material
 
+
 class Measurement(models.Model):
     # CHANGE-BACK once database cleanup is done to make unique=True
     measurement = models.CharField(max_length=200)
@@ -249,6 +272,7 @@ class Measurement(models.Model):
     def __unicode__(self):
         return self.measurement
 
+
 class Type(models.Model):
     object_type = models.CharField(max_length=200)
 
@@ -257,6 +281,7 @@ class Type(models.Model):
 
     def __unicode__(self):
         return self.object_type
+
 
 class Part(models.Model):
     part = models.CharField(max_length=50, unique=True)
@@ -267,8 +292,9 @@ class Part(models.Model):
     def __unicode__(self):
         return self.part
 
+
 class Object(models.Model):
-    #object_number needs to be changed to unique=True after editing.
+    # object_number needs to be changed to unique=True after editing.
     object_number = models.CharField(max_length=20)
     accession_number = models.ForeignKey("Accession")
     object_description = models.TextField()
@@ -288,7 +314,11 @@ class Object(models.Model):
     designer = models.ForeignKey("Designer", blank=True, null=True)
     label = models.ForeignKey("Label", blank=True, null=True, verbose_name='Designer Label')
     retailer = models.ForeignKey("Retailer", blank=True, null=True)
-    retailer_label = models.ForeignKey("Retailer_Label", blank=True, null=True, verbose_name="Retailer Label")
+    retailer_label = models.ForeignKey(
+        "Retailer_Label",
+        blank=True,
+        null=True,
+        verbose_name="Retailer Label")
     classification = models.ForeignKey("Classification")
     country = models.ForeignKey("Country", blank=True, null=True)
     gender = models.CharField(max_length=14, choices=OBJECT_GENDER_CHOICES)
@@ -298,7 +328,6 @@ class Object(models.Model):
     measurement = models.ForeignKey("Measurement", blank=True, null=True)
     type = models.ForeignKey("Type", blank=True, null=True)
     parts = models.ForeignKey("Part", blank=True, null=True)
-
 
     date_record_added = models.DateTimeField(auto_now_add=True)
     date_record_last_edited = models.DateTimeField(auto_now=True)
