@@ -1,5 +1,4 @@
 from django.contrib import admin
-import django_databrowse as databrowse
 #Accession Models
 from accession.models import Accession, Donor, Country, Designer, \
 Label, Classification, Condition, Material, Measurement, \
@@ -52,21 +51,3 @@ accession_admin.register(Measurement, MeasurementAdmin)
 accession_admin.register(Type, TypeAdmin)
 accession_admin.register(Part, PartAdmin)
 accession_admin.register(Object, ObjectAdmin)
-
-#Databrowse for accession
-databrowse.site.register(Accession)
-databrowse.site.register(Donor)
-databrowse.site.register(accession_City)
-databrowse.site.register(accession_Country)
-databrowse.site.register(Designer)
-databrowse.site.register(Label)
-databrowse.site.register(Retailer)
-databrowse.site.register(Retailer_Label)
-databrowse.site.register(Classification)
-databrowse.site.register(accession_Location)
-databrowse.site.register(Condition)
-databrowse.site.register(Material)
-databrowse.site.register(Measurement)
-databrowse.site.register(Type)
-databrowse.site.register(Part)
-databrowse.site.register(Object)

@@ -10,7 +10,6 @@ setup(
     include_package_data=True,
     install_requires=[
         'django-localflavor>=1.0',
-        'django-databrowse>=1.3'
     ],
     url='https://github.com/unt-libraries/django-accession',
     author='University of North Texas Libraries',
@@ -20,7 +19,8 @@ setup(
     classifiers=[
         'Natural Language :: English',
         'Environment :: Web Environment',
-        'Framework :: Django :: 1.6',
+        'Framework :: Django :: 1.7',
+        'Framework :: Django :: 1.8',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',

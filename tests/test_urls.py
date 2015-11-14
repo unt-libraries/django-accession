@@ -1,12 +1,6 @@
 from django.core.urlresolvers import resolve
 
-import django_databrowse
-
 from accession import admin_views
-
-
-def test_databrowse():
-    assert resolve('/tfc/databrowse/').func == django_databrowse.site.root
 
 
 def test_duplicates():

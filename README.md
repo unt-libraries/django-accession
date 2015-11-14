@@ -9,7 +9,8 @@ About
 Requirements
 ------------
 
-* Django 1.6
+* Python 2.7
+* Django 1.7 or 1.8
 
 
 Installation
@@ -23,7 +24,6 @@ Installation
 2. Add app and dependency to INSTALLED_APPS.
     ```python
         INSTALLED_APPS = (
-            'django_databrowse',
             'accession',
         )
     ```
@@ -36,9 +36,9 @@ Installation
         ]
     ```
 
-4. Sync the database.
+4. Apply migrations.
     ```sh
-        $ python manage.py syncdb
+        $ python manage.py migrate
     ```
 
 
@@ -62,7 +62,7 @@ Developing
         $ docker-compose up -d
         # Use 'docker-compose stop' to stop the container.
     ```
-    At this point you should be able to access your local instance of the site by visiting `<dockerhost_ip>:8000/tfc/databrowse`.
+    At this point you should be able to access your local instance of the site by visiting `<dockerhost_ip>:8000/tfc/admin`.
 
 5. Create a superuser for access to the admin sites.
     ```sh
