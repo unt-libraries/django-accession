@@ -3,8 +3,7 @@ from djqscsv import render_to_csv_response
 from django.db import models
 from django.http import Http404
 from django.db.models.fields.related import RelatedField
-from django.template import RequestContext
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.contrib.admin.views.decorators import staff_member_required
 
 from accession.utils import find_duplicates, ModelNotFound
@@ -17,10 +16,10 @@ def duplicates(request, model_selected):
     except ModelNotFound as e:
         raise Http404(str(e))
 
-    return render_to_response(
+    return render(
+        request,
         "admin/accession/duplicates.html",
         {'object_list': results, 'model_selected': model_selected},
-        RequestContext(request, {}),
     )
 
 
@@ -68,7 +67,8 @@ def print_view(request, app_label, model_name, object_id):
                 value = row.__dict__[field.name]
         field_list.append({'label': field.verbose_name, 'value': value})
 
-    return render_to_response(
+    return render(
+        request,
         "admin/accession/print_view.html",
         {
             'requested_obj': row,
@@ -76,7 +76,6 @@ def print_view(request, app_label, model_name, object_id):
             'model_name': model_name.title(),
             'field_list': field_list,
         },
-        RequestContext(request, {}),
     )
 
 
