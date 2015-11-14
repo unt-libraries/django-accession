@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, url, include
 
 from accession.admin_views import duplicates, print_view, export_csv
-from accession.site_views import accession_admin
+from accession.admin import accession_admin
 
 urlpatterns = patterns(
     '',

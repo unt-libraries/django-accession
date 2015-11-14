@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from accession.admin_views import duplicates
-from accession.site_views import main_admin
+from accession.admin import main_admin
 
 from django.contrib import admin
 admin.autodiscover()
