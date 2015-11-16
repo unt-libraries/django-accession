@@ -114,10 +114,11 @@ class Donor(models.Model):
     middle_name = models.CharField(blank=True, max_length=100)
     last_name = models.CharField(blank=True, max_length=100)
     organization_name = models.CharField(blank=True, max_length=255)
-    donor_type = models.CharField(max_length=3,
-                                  blank=True,
-                                  choices=DONOR_TYPE_CHOICES,
-                                  default="PER")
+    donor_type = models.CharField(
+        max_length=3,
+        blank=True,
+        choices=DONOR_TYPE_CHOICES,
+        default="PER")
     gender = models.CharField(max_length=1, blank=True, choices=GENDER_CHOICES)
     address_1 = models.CharField(max_length=100, blank=True)
     address_2 = models.CharField(max_length=100, blank=True)
