@@ -39,6 +39,17 @@ class ObjectAdmin(admin.ModelAdmin):
                     'showLocation', 'showDesigner']
     search_fields = ['object_number', 'object_description', 'remarks',
                      'public_notes', 'label__label']
+    fieldsets = [(None, {
+        'fields': ('object_number', 'accession_number', 'object_description',
+                   'related_objects', 'original_numbers',
+                   'date_object_creation', 'object_era', 'remarks',
+                   'location_remarks', 'construction', 'exhibitions',
+                   'publications', 'provenance', 'condition_statement',
+                   'price', 'public_notes', 'designer', 'label', 'retailer',
+                   'retailer_label', 'classification', 'country', 'gender',
+                   'location', 'condition', 'material', 'measurement', 'type',
+                   'parts'),
+        'classes': ('wide',)})]
 
 
 class CityAdmin(admin.ModelAdmin):
@@ -67,6 +78,7 @@ class Retailer_LabelAdmin(admin.ModelAdmin):
 
 class ClassificationAdmin(admin.ModelAdmin):
     search_fields = ['classification']
+    fieldsets = [(None, {'fields': ('classification',), 'classes': ('wide',)})]
 
 
 class LocationAdmin(admin.ModelAdmin):
@@ -83,6 +95,7 @@ class MaterialAdmin(admin.ModelAdmin):
 
 class MeasurementAdmin(admin.ModelAdmin):
     search_fields = ['measurement']
+    fieldsets = [(None, {'fields': ('measurement',), 'classes': ('wide',)})]
 
 
 class TypeAdmin(admin.ModelAdmin):
