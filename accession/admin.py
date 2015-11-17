@@ -29,7 +29,7 @@ class DonorAdmin(admin.ModelAdmin):
             'fields': ('phone_number_1', 'phone_number_2', 'email_address')
         }),
         ('Comments', {
-            'fields': ('comments', )
+            'fields': ('comments',)
         })
     ]
 
@@ -42,55 +42,55 @@ class ObjectAdmin(admin.ModelAdmin):
 
 
 class CityAdmin(admin.ModelAdmin):
-    search_fields = ['city', ]
+    search_fields = ['city']
 
 
 class CountryAdmin(admin.ModelAdmin):
-    search_fields = ['country', ]
+    search_fields = ['country']
 
 
 class DesignerAdmin(admin.ModelAdmin):
-    search_fields = ['designer', ]
+    search_fields = ['designer']
 
 
 class LabelAdmin(admin.ModelAdmin):
-    search_fields = ['label', ]
+    search_fields = ['label']
 
 
 class RetailerAdmin(admin.ModelAdmin):
-    search_fields = ['retailer_name', ]
+    search_fields = ['retailer_name']
 
 
 class Retailer_LabelAdmin(admin.ModelAdmin):
-    search_fields = ['retailer_label', ]
+    search_fields = ['retailer_label']
 
 
 class ClassificationAdmin(admin.ModelAdmin):
-    search_fields = ['classification', ]
+    search_fields = ['classification']
 
 
 class LocationAdmin(admin.ModelAdmin):
-    search_fields = ['location', ]
+    search_fields = ['location']
 
 
 class ConditionAdmin(admin.ModelAdmin):
-    search_fields = ['condition', ]
+    search_fields = ['condition']
 
 
 class MaterialAdmin(admin.ModelAdmin):
-    search_fields = ['material', ]
+    search_fields = ['material']
 
 
 class MeasurementAdmin(admin.ModelAdmin):
-    search_fields = ['measurement', ]
+    search_fields = ['measurement']
 
 
 class TypeAdmin(admin.ModelAdmin):
-    search_fields = ['object_type', ]
+    search_fields = ['object_type']
 
 
 class PartAdmin(admin.ModelAdmin):
-    search_fields = ['part', ]
+    search_fields = ['part']
 
 
 # Register all the models on both admin sites.
