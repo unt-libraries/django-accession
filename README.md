@@ -1,9 +1,17 @@
 Django Accession
 ================
 
+[![Build Status](https://travis-ci.org/unt-libraries/django-accession.svg?branch=master)](https://travis-ci.org/unt-libraries/django-accession)
+
 
 About
 -----
+
+This app is used to store information about the items in the Texas Fashion
+Collection: a repository operated by the University of North Texas. Users are
+provided with a Django admin interface to enter and view information such as
+color, style, location, etc. The data may also be exported in csv
+(comma-separated-values) format.
 
 
 Requirements
