@@ -94,4 +94,3 @@ def export_csv(request, app, model):
     render_to_csv_response(objects_list)
 
     return render_to_csv_response(objects_list)
-

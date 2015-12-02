@@ -137,7 +137,19 @@ class TestExportCsv():
 
         response = admin_views.export_csv(request, 'accession', 'donor')
 
+        assert response.get('Content-Type') == 'text/csv'
         for donor in donors:
-            assert response.get('Content-Type') == 'text/csv'
             assert str(donor.first_name) in response.content
             assert str(donor.last_name) in response.content
+
+    def test_correct_info_returned_with_query_args(self, rf, admin_user):
+        DonorFactory.create_batch(10, last_name='Henry')
+        DonorFactory.create_batch(10, last_name='Fisher')
+
+        request = rf.get('/?last_name=Henry')
+        request.user = admin_user
+
+        response = admin_views.export_csv(request, 'accession', 'donor')
+
+        assert response.content.count('Henry') == 10
+        assert response.content.count('Fisher') == 0
