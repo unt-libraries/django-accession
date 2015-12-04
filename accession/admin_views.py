@@ -91,6 +91,4 @@ def export_csv(request, app, model):
     else:
         objects_list = model.objects.all()
 
-    render_to_csv_response(objects_list)
-
     return render_to_csv_response(objects_list)
