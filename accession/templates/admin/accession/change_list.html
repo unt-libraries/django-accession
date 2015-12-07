@@ -2,5 +2,5 @@
 {% load i18n %}
 
 {% block pagination %}{{ block.super }}
-<a href="{{ model.admin.url }}export_csv/{% if request.META.QUERY_STRING %}?{{ request.META.QUERY_STRING }}{% endif %}" class="addlink">Export to CSV</a> | <a href="{{ model.admin_url }}duplicates/"> List Duplicate Values</a>
+<a href="{{ model.admin.url }}export_csv/{% if request.META.QUERY_STRING %}?{{ request.META.QUERY_STRING }}{% endif %}" class="addlink">Export to CSV</a>
 {% endblock %}

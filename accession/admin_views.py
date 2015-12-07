@@ -6,21 +6,7 @@ from django.db.models.fields.related import RelatedField
 from django.shortcuts import render
 from django.contrib.admin.views.decorators import staff_member_required
 
-from accession.utils import find_duplicates, ModelNotFound
-
-
-@staff_member_required
-def duplicates(request, model_selected):
-    try:
-        results = find_duplicates(model_selected)
-    except ModelNotFound as e:
-        raise Http404(str(e))
-
-    return render(
-        request,
-        "admin/accession/duplicates.html",
-        {'object_list': results, 'model_selected': model_selected},
-    )
+from accession.admin import accession_admin
 
 
 @staff_member_required
@@ -85,10 +71,20 @@ def export_csv(request, app, model):
     except (AttributeError, LookupError) as e:
         raise Http404(str(e))
 
+    q = ''
     if request.GET:
         kwargs = request.GET.dict()
+        q = kwargs.pop('q', '')
+        model_fields_fullname = model._meta.fields
+        model_fields = [str(f).split('.')[-1] for f in model_fields_fullname]
+        valid_request_fields = set(model_fields) & set(kwargs)
+        kwargs = {k: kwargs[k] for k in valid_request_fields}
+
         objects_list = model.objects.filter(**kwargs)
+
     else:
         objects_list = model.objects.all()
 
-    return render_to_csv_response(objects_list)
+    model_admin = accession_admin._registry[model]
+    queried_objects_list = model_admin.get_search_results(request, objects_list, q)[0]
+    return render_to_csv_response(queried_objects_list)
