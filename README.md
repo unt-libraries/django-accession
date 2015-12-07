@@ -56,7 +56,7 @@ Installation
             url(r'^tfc/', include('accession.urls')),
         ]
     ```
-    You may also add the csv export, duplicates, and print urls from the app to
+    You may also add the csv export and print urls from the app to
     your project, if you wish for those pages to function from the admin pages
     of not only the app, but also the project.
 
