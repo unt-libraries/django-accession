@@ -4,10 +4,10 @@ Change Log
 1.1.0
 -----
 
-* Added "Export to CSV" and "List Duplicate Values" links to admin pages.
-* Changed csv export behavior to export filtered results if using one of the
-set filters.
-* Made those two links and the "Print" link work from the test project's admin
+* Added "Export to CSV" link to admin pages.
+* Removed duplicates view.
+* Changed csv export behavior to work with searches (exporting just the results of the search).
+* Made the "Export to CSV" and the "Print" link work from the test project's admin
 site (used to only work from the app's admin site)
 
 1.0.0
