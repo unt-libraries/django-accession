@@ -100,10 +100,24 @@ class TestExportCsv():
         DonorFactory.create_batch(10, last_name='Henry')
         DonorFactory.create_batch(10, last_name='Fisher')
 
-        request = rf.get('/?last_name=Henry')
+        request = rf.get('/?q=Henry')
         request.user = admin_user
 
         response = admin_views.export_csv(request, 'accession', 'donor')
 
         assert response.content.count('Henry') == 10
         assert response.content.count('Fisher') == 0
+
+    def test_correct_info_returned_with_filters(self, rf, admin_user):
+        AccessionFactory.create_batch(10, description='included',
+                                      date_received='1990-01-01')
+        AccessionFactory.create_batch(10, description='excluded',
+                                      date_received='2000-05-05')
+
+        request = rf.get('/?date_received__year=1990')
+        request.user = admin_user
+
+        response = admin_views.export_csv(request, 'accession', 'accession')
+
+        assert response.content.count('included') == 10
+        assert response.content.count('excluded') == 0
