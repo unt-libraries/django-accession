@@ -71,20 +71,13 @@ def export_csv(request, app, model):
     except (AttributeError, LookupError) as e:
         raise Http404(str(e))
 
-    q = ''
-    if request.GET:
-        kwargs = request.GET.dict()
-        q = kwargs.pop('q', '')
-        model_fields_fullname = model._meta.fields
-        model_fields = [str(f).split('.')[-1] for f in model_fields_fullname]
-        valid_request_fields = set(model_fields) & set(kwargs)
-        kwargs = {k: kwargs[k] for k in valid_request_fields}
-
+    kwargs = request.GET.dict()
+    q = kwargs.pop('q', '')
+    objects_list = model.objects.all()
+    if kwargs:
         objects_list = model.objects.filter(**kwargs)
 
-    else:
-        objects_list = model.objects.all()
-
+    # Using one of Django's private API's (_registry). May break with updates.
     model_admin = accession_admin._registry[model]
-    queried_objects_list = model_admin.get_search_results(request, objects_list, q)[0]
-    return render_to_csv_response(queried_objects_list)
+    results, _ = model_admin.get_search_results(request, objects_list, q)
+    return render_to_csv_response(results)
