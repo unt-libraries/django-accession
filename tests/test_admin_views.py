@@ -9,52 +9,6 @@ from .factories import DonorFactory, AccessionFactory
 pytestmark = pytest.mark.django_db
 
 
-class TestDuplicates():
-
-    def test_returns_200_with_existing_model(self, rf, admin_user):
-        request = rf.get('/')
-        request.user = admin_user
-
-        response = admin_views.duplicates(request, 'donor')
-
-        assert response.status_code == 200
-
-    def test_raises_404_when_model_does_not_exist(self, rf, admin_user):
-        request = rf.get('/')
-        request.user = admin_user
-
-        with pytest.raises(Http404):
-            admin_views.duplicates(request, 'dne')
-
-    def test_template_used(self, admin_client):
-        response = admin_client.get('/admin/accession/donor/duplicates/')
-        assert response.templates[0].name == 'admin/accession/duplicates.html'
-
-    def test_with_duplicates(self, rf, admin_user):
-        # Non-duplicate entry
-        DonorFactory(last_name='Libman')
-        # Duplicate entries
-        DonorFactory.create_batch(4, last_name='Smith')
-
-        request = rf.get('/')
-        request.user = admin_user
-
-        response = admin_views.duplicates(request, 'donor')
-
-        assert 'Libman' not in response.content
-        assert 'Smith' in response.content
-
-    def test_without_duplicates(self, rf, admin_user):
-        DonorFactory.create_batch(5)
-
-        request = rf.get('/')
-        request.user = admin_user
-
-        response = admin_views.duplicates(request, 'donor')
-
-        assert 'There are no duplicate entries' in response.content
-
-
 class TestPrintView():
 
     def test_returns_200(self, rf, admin_user):
@@ -137,7 +91,33 @@ class TestExportCsv():
 
         response = admin_views.export_csv(request, 'accession', 'donor')
 
+        assert response.get('Content-Type') == 'text/csv'
         for donor in donors:
-            assert response.get('Content-Type') == 'text/csv'
             assert str(donor.first_name) in response.content
             assert str(donor.last_name) in response.content
+
+    def test_correct_info_returned_with_query_args(self, rf, admin_user):
+        DonorFactory.create_batch(10, last_name='Henry')
+        DonorFactory.create_batch(10, last_name='Fisher')
+
+        request = rf.get('/?q=Henry')
+        request.user = admin_user
+
+        response = admin_views.export_csv(request, 'accession', 'donor')
+
+        assert response.content.count('Henry') == 10
+        assert response.content.count('Fisher') == 0
+
+    def test_correct_info_returned_with_filters(self, rf, admin_user):
+        AccessionFactory.create_batch(10, description='included',
+                                      date_received='1990-01-01')
+        AccessionFactory.create_batch(10, description='excluded',
+                                      date_received='2000-05-05')
+
+        request = rf.get('/?date_received__year=1990')
+        request.user = admin_user
+
+        response = admin_views.export_csv(request, 'accession', 'accession')
+
+        assert response.content.count('included') == 10
+        assert response.content.count('excluded') == 0

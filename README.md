@@ -36,15 +36,31 @@ Installation
         )
     ```
 
-3. Include the URLs.
+3. Add the required context processor to your list of context processors.
+    ```python
+        TEMPLATES = [
+            {
+                'OPTIONS': {
+                    'context_processors': [
+                        'django.core.context_processors.request',
+                    ],
+                },
+            },
+        ]
+    ```
+
+4. Include the URLs.
     ```python
         urlpatterns = [
             url(r'^admin/', include(admin.site.urls)),
             url(r'^tfc/', include('accession.urls')),
         ]
     ```
+    You may also add the csv export and print urls from the app to
+    your project, if you wish for those pages to function from the admin pages
+    of not only the app, but also the project.
 
-4. Apply migrations.
+5. Apply migrations.
     ```sh
         $ python manage.py migrate
     ```
