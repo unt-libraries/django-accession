@@ -7,7 +7,7 @@ from django.shortcuts import render
 from django.contrib.admin.views.decorators import staff_member_required
 
 from accession.admin import accession_admin
-from accession.models import Accession, Donor, Object
+from accession.export_csv_utils import get_object_by_model
 
 
 @staff_member_required
@@ -82,59 +82,9 @@ def export_csv(request, app, model):
     model_admin = accession_admin._registry[model]
     results, _ = model_admin.get_search_results(request, objects_list, q)
 
-    # Modify the querysets to show something more meaningful than object IDs.
-    field_serializer_map = {}
-    field_header_map = {}
+    obj = get_object_by_model(model)
 
-    if model == Accession:
-        field_serializer_map = {'donor_id': (lambda x: str(Donor.objects.get(id=x)))}
-        field_header_map = {'donor_id': 'donor'}
+    results = results.values(*obj.fields_to_show)
 
-    elif model == Donor:
-        fields_to_show = [
-            'id', 'salutation', 'first_name', 'middle_name', 'last_name',
-            'organization_name', 'donor_type', 'gender', 'address_1',
-            'address_2', 'city__city', 'state', 'postal_code',
-            'country__country', 'phone_number_1', 'phone_number_2',
-            'email_address', 'comments'
-        ]
-
-        field_header_map = {'city__city': 'city', 'country__country': 'country'}
-
-        results = results.values(*fields_to_show)
-
-    elif model == Object:
-        fields_to_show = [
-            'id', 'object_number', 'accession_number__accession_number',
-            'object_description', 'related_objects', 'original_numbers',
-            'date_object_creation', 'object_era', 'remarks', 'location_remarks',
-            'construction', 'exhibitions', 'publications', 'provenance',
-            'condition_statement', 'price', 'public_notes',
-            'designer__designer', 'label__label', 'retailer__retailer_name',
-            'retailer_label__retailer_label', 'classification__classification',
-            'country__country', 'gender', 'location__location',
-            'condition__condition', 'material__material',
-            'measurement__measurement', 'type__object_type', 'parts__part',
-            'date_record_added', 'date_record_last_edited'
-        ]
-
-        field_header_map = {
-            'accession_number__accession_number': 'accession number',
-            'designer__designer': 'designer',
-            'label__label': 'label',
-            'retailer__retailer_name': 'retailer',
-            'retailer_label__retailer_label': 'retailer label',
-            'classification__classification': 'classification',
-            'country__country': 'country',
-            'location__location': 'location',
-            'condition__condition': 'condition',
-            'material__material': 'material',
-            'measurement__measurement': 'measurement',
-            'type__object_type': 'type',
-            'parts__part': 'parts'
-        }
-
-        results = results.values(*fields_to_show)
-
-    return render_to_csv_response(results, field_header_map=field_header_map,
-                                  field_serializer_map=field_serializer_map)
+    return render_to_csv_response(results, field_header_map=obj.field_header_map,
+                                  field_serializer_map=obj.field_serializer_map)
