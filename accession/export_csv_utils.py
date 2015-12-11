@@ -15,18 +15,18 @@ def get_csv_config(model):
         return GenericCSVConfig
 
 
-class AccessionCSVConfig:
-    fields_to_show = []
-    field_serializer_map = {
+class AccessionCSVConfig(object):
+    fields = []
+    serializer_map = {
         'donor_id': (lambda x: str(Donor.objects.get(id=x)))
     }
-    field_header_map = {
+    header_map = {
         'donor_id': 'donor'
     }
 
 
-class DonorCSVConfig:
-    fields_to_show = [
+class DonorCSVConfig(object):
+    fields = [
         'id',
         'salutation',
         'first_name',
@@ -46,15 +46,15 @@ class DonorCSVConfig:
         'email_address',
         'comments'
     ]
-    field_serializer_map = {}
-    field_header_map = {
+    serializer_map = {}
+    header_map = {
         'city__city': 'city',
         'country__country': 'country'
     }
 
 
-class ObjectCSVConfig:
-    fields_to_show = [
+class ObjectCSVConfig(object):
+    fields = [
         'id',
         'object_number',
         'accession_number__accession_number',
@@ -88,8 +88,8 @@ class ObjectCSVConfig:
         'date_record_added',
         'date_record_last_edited'
     ]
-    field_serializer_map = {}
-    field_header_map = {
+    serializer_map = {}
+    header_map = {
         'accession_number__accession_number': 'accession number',
         'designer__designer': 'designer',
         'label__label': 'label',
@@ -106,7 +106,7 @@ class ObjectCSVConfig:
     }
 
 
-class GenericCSVConfig:
-    fields_to_show = []
-    field_serializer_map = {}
-    field_header_map = {}
+class GenericCSVConfig(object):
+    fields = []
+    serializer_map = {}
+    header_map = {}

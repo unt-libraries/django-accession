@@ -84,10 +84,10 @@ def export_csv(request, app, model):
 
     csv_config = get_csv_config(model)
 
-    results = results.values(*csv_config.fields_to_show)
+    results = results.values(*csv_config.fields)
 
     return render_to_csv_response(
         results,
-        field_header_map=csv_config.field_header_map,
-        field_serializer_map=csv_config.field_serializer_map
+        field_header_map=csv_config.header_map,
+        field_serializer_map=csv_config.serializer_map
     )
