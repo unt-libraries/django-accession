@@ -7,7 +7,7 @@ from django.shortcuts import render
 from django.contrib.admin.views.decorators import staff_member_required
 
 from accession.admin import accession_admin
-from accession.export_csv_utils import get_object_by_model
+from accession.export_csv_utils import get_csv_config
 
 
 @staff_member_required
@@ -82,9 +82,12 @@ def export_csv(request, app, model):
     model_admin = accession_admin._registry[model]
     results, _ = model_admin.get_search_results(request, objects_list, q)
 
-    obj = get_object_by_model(model)
+    csv_config = get_csv_config(model)
 
-    results = results.values(*obj.fields_to_show)
+    results = results.values(*csv_config.fields_to_show)
 
-    return render_to_csv_response(results, field_header_map=obj.field_header_map,
-                                  field_serializer_map=obj.field_serializer_map)
+    return render_to_csv_response(
+        results,
+        field_header_map=csv_config.field_header_map,
+        field_serializer_map=csv_config.field_serializer_map
+    )
