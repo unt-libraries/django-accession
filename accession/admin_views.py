@@ -7,7 +7,7 @@ from django.shortcuts import render
 from django.contrib.admin.views.decorators import staff_member_required
 
 from accession.admin import accession_admin
-from accession.export_csv_utils import get_csv_config
+from accession.utils import get_csv_config
 
 
 @staff_member_required

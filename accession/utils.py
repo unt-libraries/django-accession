@@ -1,3 +1,14 @@
+"""Returns configurations for exporting querysets to csv based on the model.
+
+This module has one function (get_csv_config) which takes a model and returns
+a list and two dictionaries. The list (fields) dictates which fields are
+to be returned in a queryset from the given model. The first dictionary
+(serializer_map) maps new fields to their data, and is used here to return
+the string representation of a foreign key in the Accession model. The second
+dictionary (header_map) renames field names. It is used to make the final csv
+output more easily readable. The list and dictionaries are determined by what
+model is given.
+"""
 from accession.models import Accession, Donor, Object
 
 
