@@ -82,10 +82,15 @@ def export_csv(request, app, model):
     model_admin = accession_admin._registry[model]
     results, _ = model_admin.get_search_results(request, objects_list, q)
 
+    # Retrieve the configuration object for the given model.
     csv_config = get_csv_config(model)
 
+    # Use the fields list from the configuration object to filter the fields
+    # that are shown in the queryset.
     results = results.values(*csv_config.fields)
 
+    # Use the two dicts from the configuration object to define new columns in
+    # the csv doc and rename the fields to be more readable.
     return render_to_csv_response(
         results,
         field_header_map=csv_config.header_map,
