@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+1.1.1
+-----
+
+* Changed the way that some of the fields titles are assigned in the CSV export
+feature to make them more easily understood.
+
 1.1.0
 -----
 
