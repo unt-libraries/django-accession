@@ -8,7 +8,8 @@ class AccessionAdmin(admin.ModelAdmin):
                     'has_date_paperwork_sent', 'has_date_paperwork_returned',
                     'description', 'accession_note']
     search_fields = ['accession_number', 'description', 'accession_note',
-                     'donor__first_name', 'donor__last_name']
+                     'donor__first_name', 'donor__last_name',
+                     'donor__organization_name']
     date_hierarchy = 'date_received'
 
 
