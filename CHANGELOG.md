@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+1.1.2
+-----
+
+* Added `organization_name` to the `DonorAdmin` `search_fields` to fix retrieval on Donor names. [#17](https://github.com/unt-libraries/django-accession/issues/17)
+
 1.1.1
 -----
 
