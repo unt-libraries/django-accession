@@ -14,7 +14,8 @@ class AccessionAdmin(admin.ModelAdmin):
 
 class DonorAdmin(admin.ModelAdmin):
     list_display = ['full_name', 'phone_number_1', 'comments']
-    search_fields = ['first_name', 'last_name', 'email_address', 'comments']
+    search_fields = ['organization_name', 'first_name', 'last_name',
+                     'email_address', 'comments']
 
     fieldsets = [
         ('Contact Info', {
