@@ -9,8 +9,8 @@ setup(
     long_description='See the home page for more information.',
     include_package_data=True,
     install_requires=[
-        'django-localflavor>=1.0',
-        'django-queryset-csv>=0.3.1',
+        'django-localflavor==1.0',
+        'django-queryset-csv==0.3.1',
     ],
     zip_safe=False,
     url='https://github.com/unt-libraries/django-accession',

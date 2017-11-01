@@ -21,7 +21,7 @@ def print_view(request, app_label, model_name, object_id):
 
     try:
         row = model.objects.get(id__exact=int(object_id))
-    except:
+    except model.DoesNotExist:
         raise Http404("Object not found.")
 
     field_list = []
@@ -40,7 +40,7 @@ def print_view(request, app_label, model_name, object_id):
                         entry = related_model.objects.get(
                             id__exact=int(row.__dict__[key]),
                             )
-                    except:
+                    except Exception:
                         pass
                     else:
                         value = entry.__unicode__().encode("utf-8")
