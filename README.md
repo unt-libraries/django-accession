@@ -18,7 +18,7 @@ Requirements
 ------------
 
 * Python 2.7
-* Django 1.7 or 1.8
+* Django 1.8 - 1.11
 
 
 Installation
