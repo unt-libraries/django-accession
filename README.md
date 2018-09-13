@@ -36,20 +36,7 @@ Installation
         )
     ```
 
-3. Add the required context processor to your list of context processors.
-    ```python
-        TEMPLATES = [
-            {
-                'OPTIONS': {
-                    'context_processors': [
-                        'django.core.context_processors.request',
-                    ],
-                },
-            },
-        ]
-    ```
-
-4. Include the URLs.
+3. Include the URLs.
     ```python
         urlpatterns = [
             url(r'^admin/', include(admin.site.urls)),
@@ -60,7 +47,7 @@ Installation
     your project, if you wish for those pages to function from the admin pages
     of not only the app, but also the project.
 
-5. Apply migrations.
+4. Apply migrations.
     ```sh
         $ python manage.py migrate
     ```
@@ -87,6 +74,7 @@ Developing
         # Use 'docker-compose stop' to stop the container.
     ```
     At this point you should be able to access your local instance of the site by visiting `<dockerhost_ip>:8000/tfc/admin`.
+    If you have not changed anything about the docker configuration, you can just use `localhost:8000/tfc/admin`.
 
 5. Create a superuser for access to the admin sites.
     ```sh
