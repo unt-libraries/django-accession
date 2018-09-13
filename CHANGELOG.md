@@ -2,12 +2,17 @@ Change Log
 ==========
 
 
-x.x.x
+2.0.0
 -----
 
 * Reworked tox.ini and .travis.yml to allow for easier test environment expansion later on.
 * Made except clauses catch specific exceptions.
-* Fixed some loose dependencies.
+* Made some changes to test setup to comply with newer versions of Django.
+* Updated dependencies and app to now work with Django 1.8 - 1.11.
+* Updated some Django import paths.
+* Named the print URL.
+* Changed how the history and print URLs were formed so they work with all of our supported versions of Django.
+* Dropped support for Django 1.7.
 
 
 1.1.2

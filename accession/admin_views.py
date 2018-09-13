@@ -1,6 +1,6 @@
 from djqscsv import render_to_csv_response
 
-from django.db import models
+from django.apps import apps
 from django.http import Http404
 from django.db.models.fields.related import RelatedField
 from django.shortcuts import render
@@ -15,7 +15,7 @@ def print_view(request, app_label, model_name, object_id):
     """Print view for the accession object model"""
     # Get the model
     try:
-        model = models.get_model(app_label, model_name)
+        model = apps.get_model(app_label, model_name)
     except LookupError:
         raise Http404("Model not found.")
 
@@ -68,7 +68,7 @@ def print_view(request, app_label, model_name, object_id):
 
 def export_csv(request, app, model):
     try:
-        model = models.get_model(app, model)
+        model = apps.get_model(app, model)
     except (AttributeError, LookupError) as e:
         raise Http404(str(e))
 
@@ -94,5 +94,6 @@ def export_csv(request, app, model):
     return render_to_csv_response(
         results,
         field_header_map=csv_config.header_map,
-        field_serializer_map=csv_config.serializer_map
+        field_serializer_map=csv_config.serializer_map,
+        streaming=False,
     )

@@ -5,6 +5,8 @@ SECRET_KEY = 'vm%)%jzn1#z)_ms+pbvuphki+_9mdfm#ale&dys481q*sf9@@a'
 
 DEBUG = True
 
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1']
+
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -35,7 +37,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'django.core.context_processors.request',
             ],
         },
     },
