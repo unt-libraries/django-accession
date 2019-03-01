@@ -92,7 +92,7 @@ class Accession(models.Model):
         help_text="Private note related to this accession")
 
     def __unicode__(self):
-            return self.accession_number
+        return self.accession_number
 
     class Meta:
         ordering = ["accession_number"]
