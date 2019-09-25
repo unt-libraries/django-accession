@@ -17,7 +17,7 @@ color, style, location, etc. The data may also be exported in csv
 Requirements
 ------------
 
-* Python 3.7
+* Python 3.5 - 3.7
 * Django 1.11
 
 
@@ -99,3 +99,4 @@ Contributors
 * [Mark Phillips](https://github.com/vphill)
 * [Joey Liechty](https://github.com/yeahdef)
 * [Gio Gottardi](https://github.com/somexpert)
+* [Madhulika Bayyavarapu](https://github.com/madhulika95b)
