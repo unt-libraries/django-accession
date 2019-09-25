@@ -91,7 +91,7 @@ class Accession(models.Model):
         blank=True,
         help_text="Private note related to this accession")
 
-    def __unicode__(self):
+    def __str__(self):
         return self.accession_number
 
     class Meta:
@@ -143,12 +143,12 @@ class Donor(models.Model):
     @property
     def full_name(self):
         if self.donor_type == "ORG":
-            return u'%s' % self.organization_name
+            return '%s' % self.organization_name
         else:
-            return u'%s %s' % (self.first_name, self.last_name)
+            return '%s %s' % (self.first_name, self.last_name)
 
-    def __unicode__(self):
-        return u'%s' % self.full_name
+    def __str__(self):
+        return '%s' % self.full_name
 
 
 class City(models.Model):
@@ -158,7 +158,7 @@ class City(models.Model):
         ordering = ["city"]
         verbose_name_plural = "Cities"
 
-    def __unicode__(self):
+    def __str__(self):
         return self.city
 
 
@@ -170,7 +170,7 @@ class Country(models.Model):
         ordering = ["country"]
         verbose_name_plural = "Countries"
 
-    def __unicode__(self):
+    def __str__(self):
         return self.country
 
 
@@ -181,7 +181,7 @@ class Designer(models.Model):
     class Meta:
         ordering = ["designer"]
 
-    def __unicode__(self):
+    def __str__(self):
         return self.designer
 
 
@@ -192,7 +192,7 @@ class Label(models.Model):
     class Meta:
         ordering = ["label"]
 
-    def __unicode__(self):
+    def __str__(self):
         return self.label
 
 
@@ -202,7 +202,7 @@ class Retailer(models.Model):
     class Meta:
         ordering = ["retailer_name"]
 
-    def __unicode__(self):
+    def __str__(self):
         return self.retailer_name
 
 
@@ -217,7 +217,7 @@ class Retailer_Label(models.Model):
         ordering = ["retailer_label"]
         verbose_name_plural = "Retailer Labels"
 
-    def __unicode__(self):
+    def __str__(self):
         return self.retailer_label
 
 
@@ -227,7 +227,7 @@ class Classification(models.Model):
     class Meta:
         ordering = ["classification"]
 
-    def __unicode__(self):
+    def __str__(self):
         return self.classification
 
 
@@ -238,7 +238,7 @@ class Location(models.Model):
     class Meta:
         ordering = ["location"]
 
-    def __unicode__(self):
+    def __str__(self):
         return self.location
 
 
@@ -248,7 +248,7 @@ class Condition(models.Model):
     class Meta:
         ordering = ["condition"]
 
-    def __unicode__(self):
+    def __str__(self):
         return self.condition
 
 
@@ -259,7 +259,7 @@ class Material(models.Model):
     class Meta:
         ordering = ["material"]
 
-    def __unicode__(self):
+    def __str__(self):
         return self.material
 
 
@@ -270,7 +270,7 @@ class Measurement(models.Model):
     class Meta:
         ordering = ["measurement"]
 
-    def __unicode__(self):
+    def __str__(self):
         return self.measurement
 
 
@@ -280,7 +280,7 @@ class Type(models.Model):
     class Meta:
         ordering = ["object_type"]
 
-    def __unicode__(self):
+    def __str__(self):
         return self.object_type
 
 
@@ -290,7 +290,7 @@ class Part(models.Model):
     class Meta:
         ordering = ["part"]
 
-    def __unicode__(self):
+    def __str__(self):
         return self.part
 
 
@@ -333,7 +333,7 @@ class Object(models.Model):
     date_record_added = models.DateTimeField(auto_now_add=True)
     date_record_last_edited = models.DateTimeField(auto_now=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.object_number
 
     def showLabel(self):

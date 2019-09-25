@@ -43,12 +43,12 @@ def print_view(request, app_label, model_name, object_id):
                     except Exception:
                         pass
                     else:
-                        value = entry.__unicode__().encode("utf-8")
+                        value = entry
                         break
         # if it isn't a related field
         else:
             # get the value of the field
-            if isinstance(row.__dict__[field.name], basestring):
+            if isinstance(row.__dict__[field.name], str):
                 value = row.__dict__[field.name].encode("utf-8")
             else:
                 value = row.__dict__[field.name]
