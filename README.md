@@ -17,8 +17,8 @@ color, style, location, etc. The data may also be exported in csv
 Requirements
 ------------
 
-* Python 2.7
-* Django 1.8 - 1.11
+* Python 3.7
+* Django 1.11
 
 
 Installation
