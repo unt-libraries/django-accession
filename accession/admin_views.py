@@ -47,10 +47,7 @@ def print_view(request, app_label, model_name, object_id):
         # if it isn't a related field
         else:
             # get the value of the field
-            if isinstance(row.__dict__[field.name], str):
-                value = row.__dict__[field.name].encode("utf-8")
-            else:
-                value = row.__dict__[field.name]
+            value = row.__dict__[field.name]
         field_list.append({'label': field.verbose_name, 'value': value})
 
     return render(
