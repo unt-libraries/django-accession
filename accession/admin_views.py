@@ -35,23 +35,19 @@ def print_view(request, app_label, model_name, object_id):
             for key in row.__dict__.keys():
                 # find the field in the row that matches the related field
                 if key.startswith(field.name):
-                    # Get the unicode version of the row in the related model, based on the id
+                    # Get the row in the related model, based on the id
                     try:
-                        entry = related_model.objects.get(
+                        value = related_model.objects.get(
                             id__exact=int(row.__dict__[key]),
                             )
                     except Exception:
                         pass
                     else:
-                        value = entry.__unicode__().encode("utf-8")
                         break
         # if it isn't a related field
         else:
             # get the value of the field
-            if isinstance(row.__dict__[field.name], basestring):
-                value = row.__dict__[field.name].encode("utf-8")
-            else:
-                value = row.__dict__[field.name]
+            value = row.__dict__[field.name]
         field_list.append({'label': field.verbose_name, 'value': value})
 
     return render(

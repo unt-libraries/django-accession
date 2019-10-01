@@ -6,6 +6,7 @@ x.x.x
 -----
 
 * Fixed flake8 indentation error.
+* Upgraded python version from 2.7 to 3.7.
 
 
 2.0.0
