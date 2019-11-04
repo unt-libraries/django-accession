@@ -75,13 +75,18 @@ Developing
     ```
     At this point you should be able to access your local instance of the site by visiting `<dockerhost_ip>:8000/tfc/admin`.
     If you have not changed anything about the docker configuration, you can just use `localhost:8000/tfc/admin`.
+    
+5. Run the migrations
+    ```sh
+        $ docker-compose run --rm web python manage.py migrate
+    ```
 
-5. Create a superuser for access to the admin sites.
+6. Create a superuser for access to the admin sites.
     ```sh
         $ docker-compose run --rm web python manage.py createsuperuser
     ```
 
-6. If desired, run the tests.
+7. If desired, run the tests.
     ```sh
         $ docker-compose run --rm web tox
     ```
