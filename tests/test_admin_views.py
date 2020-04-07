@@ -51,10 +51,10 @@ class TestPrintView():
         response = admin_views.print_view(request, 'accession', 'accession', 1)
 
         # Check a couple fields to make sure they're there.
-        assert accession.description in response.content
-        assert accession.acquisition_method in response.content
+        assert accession.description in response.content.decode()
+        assert accession.acquisition_method in response.content.decode()
         # Make sure the related items are there too.
-        assert str(accession.donor) in response.content
+        assert str(accession.donor) in response.content.decode()
 
 
 class TestExportCsv():
@@ -93,8 +93,8 @@ class TestExportCsv():
 
         assert response.get('Content-Type') == 'text/csv'
         for donor in donors:
-            assert str(donor.first_name) in response.content
-            assert str(donor.last_name) in response.content
+            assert str(donor.first_name) in response.content.decode()
+            assert str(donor.last_name) in response.content.decode()
 
     def test_correct_info_returned_with_query_args(self, rf, admin_user):
         DonorFactory.create_batch(10, last_name='Henry')
@@ -105,8 +105,8 @@ class TestExportCsv():
 
         response = admin_views.export_csv(request, 'accession', 'donor')
 
-        assert response.content.count('Henry') == 10
-        assert response.content.count('Fisher') == 0
+        assert response.content.decode().count('Henry') == 10
+        assert response.content.decode().count('Fisher') == 0
 
     def test_correct_info_returned_with_filters(self, rf, admin_user):
         AccessionFactory.create_batch(10, description='included',
@@ -116,8 +116,6 @@ class TestExportCsv():
 
         request = rf.get('/?date_received__year=1990')
         request.user = admin_user
-
         response = admin_views.export_csv(request, 'accession', 'accession')
-
-        assert response.content.count('included') == 10
-        assert response.content.count('excluded') == 0
+        assert response.content.decode().count('included') == 10
+        assert response.content.decode().count('excluded') == 0
